@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +23,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.cs545.jungleresort.domain.Booking;
+import edu.cs545.jungleresort.domain.Customer;
 import edu.cs545.jungleresort.domain.Images;
 import edu.cs545.jungleresort.domain.Room;
 import edu.cs545.jungleresort.enumeration.RoomFeatures;
+import edu.cs545.jungleresort.enumeration.RoomStatus;
 import edu.cs545.jungleresort.library.ByteToMultipart;
+import edu.cs545.jungleresort.service.BookingService;
+import edu.cs545.jungleresort.service.ICustomerService;
 import edu.cs545.jungleresort.serviceImpl.RoomServiceImpl;
 
 @Controller
 public class RoomController {
 	@Autowired
 	RoomServiceImpl roomService;
-
+	@Autowired
+	ICustomerService customerService;
+	@Autowired
+	BookingService bookingService;
 	@Autowired
 	ServletContext servletContext;
 
@@ -58,6 +69,28 @@ public class RoomController {
 	public String addRoom(@ModelAttribute("room") Room room, Model model, @RequestParam String errorMessage) {
 		model.addAttribute("imageType", errorMessage);
 		return "AddRoom";
+	}
+
+	@RequestMapping(value = "/booking/{username}/{roomId}", method = RequestMethod.POST)
+	public String booking(@PathVariable("roomId") int roomId, @PathVariable("username") String userName, Booking booking, HttpServletRequest request) {
+		
+		System.out.println("Room Id "+ roomId+ "userId "+ userName +  " inside booking room controller !!88888888888888888888888888888888888");
+		Room myRoom = roomService.getRoomById(roomId);
+		myRoom.setId(roomId);
+		myRoom.setRoomStatus(RoomStatus.Rented);
+		HttpSession session = request.getSession(true);
+		Customer customer2  = (Customer) request.getSession(false).getAttribute("user");
+		
+		Customer customer = customerService.getCustomerByUserName(userName);
+		booking.setRoomId(roomId);
+		booking.setCustomerId(customer.getCustomerId());
+		//booking.setStartDate(startDate);
+		//booking.setEndDate(endDate);
+		
+		System.out.println("********************** The user Name is : "+customer2.getName());
+		bookingService.saveBooking(booking);
+		roomService.addRoom(myRoom);
+		return "redirect:/allroomslist";
 	}
 
 	public boolean checkJPEG(MultipartFile tempImg) {
@@ -216,16 +249,17 @@ public class RoomController {
 		return "redirect:/allroomslist";
 	}
 
-	@RequestMapping(value = "booking/{roomNo}", method = RequestMethod.POST)
-	public String processOrder(Model model, @PathVariable String roomNo) {
-		System.out.println("inside Booking !!");
-		// orderService.processOrder(productId, quantity);
-
-		return "redirect:/home";
-
-	}
-
-	@RequestMapping(value = "/availableroomslist", method=RequestMethod.GET)
+	/*
+	 * @RequestMapping(value = "booking/{roomNo}", method = RequestMethod.POST)
+	 * public String processOrder(Model model, @PathVariable String roomNo) {
+	 * System.out.println("inside Booking !!"); //
+	 * orderService.processOrder(productId, quantity);
+	 * 
+	 * return "redirect:/home";
+	 * 
+	 * }
+	 */
+	@RequestMapping(value = "/availableroomslist", method = RequestMethod.GET)
 	public String availableRoomsList(Map<String, Object> model) throws UnsupportedEncodingException {
 		byte[] encodeBasee64;
 		String base64EncodeImage;
@@ -235,13 +269,9 @@ public class RoomController {
 				base64EncodeImage = new String(encodeBasee64, "UTF-8");
 				image.setEncodeImage3(base64EncodeImage);
 			}
-		}		
+		}
 		model.put("availablerooms", roomService.getAllAvailableRoom());
 		return "AvailableRoomsList";
 	}
 
-	
-
-
 }
-

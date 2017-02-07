@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -39,6 +40,25 @@
 						</ul></li>
 					<li><a href='#'>About</a></li>
 					<li><a href='#'>Contact</a></li>
+					<li><c:choose>
+							<c:when test="${empty user}">
+								<a href='/customerlogin'>sign in</a>
+							</c:when>
+							<c:otherwise>
+								<li><a href='#' >Logged as :
+										${user.username}</a>
+
+									<ul>
+										<li><a href='#'>Profile</a></li>
+
+									</ul>
+									<ul>
+										<li><a href='/logout'>Logout</a></li>
+
+									</ul></li>
+
+							</c:otherwise>
+						</c:choose></li>
 				</ul>
 			</div>
 		</div>

@@ -18,7 +18,7 @@
 			<h2 style="color: #a94442; font-size: 300%; font-weight: 700">Welcome
 				to our shopping world</h2>
 			<br>
-			<form action="customerlogin" method="post" modelAttribute="customer">
+			<form action="/customerlogin" method="post" modelAttribute="customer">
 				<p>
 					<span class="glyphicon glyphicon-user"></span> <label>Username</label>
 					<input type="text" name="username" value="${cookie.usernameCust.value}" required />
@@ -37,6 +37,7 @@
 
 				<p>
 					<input class="btn btn-info btn-bg" type="submit" value="Login" />
+					<a href="/addcustomer">Register Here</a>
 				</p>
 
 

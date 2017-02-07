@@ -7,6 +7,7 @@
 <html>
 <head>
 <title>Add Admin</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <style>
 body {
 	background-color: #f2f2f2;
@@ -32,6 +33,29 @@ div {
 	color: red;
 }
 </style>
+
+<script>
+$(document).ready(function() {
+	  $("#password2").keyup(validate);
+	});
+
+
+	function validate() {
+	  var password1 = $("#password1").val();
+	  var password2 = $("#password2").val();
+
+	    
+	 
+	    if(password1 == password2) {
+	       $("#validate-status").text("password match");        
+	    }
+	    else {
+	        $("#validate-status").text("password mismatch");  
+	    }
+	    
+	}
+
+</script>
 </head>
 
 
@@ -46,19 +70,20 @@ div {
 				<tr>
 					<td><form:label path="username">UserName</form:label></td>
 					<td><form:input path="username" name="username" type="text" /></td>
-					<td><form:errors path="username" cssStyle="color:red;" /></td>
+					<td><form:errors path="username" cssStyle="color:red;" /><span class="colorRed">${userexists}</span></td>
 				</tr>
 
 				<tr>
 					<td><form:label path="password">Password</form:label></td>
-					<td><form:input path="password" type="password" value="" /></td>
+					<td><form:input path="password" type="password" value="" id="password1"/></td>
 					<td><form:errors path="password" cssStyle="color:red;" /></td>
 				</tr>
 
 				<tr>
 					<td><form:label path="confirmPassword">Confirm Password</form:label></td>
-					<td><form:input path="confirmPassword" type="password" value="" /></td>
-					<td><form:errors path="confirmPassword" cssStyle="color:red;" /></td>
+					<td><form:input path="confirmPassword" type="password" value="" id="password2"/></td>
+					<td><span class="colorRed" id="validate-status">${passmismatch}</span></td>
+<!-- 					<td><span ></span></td> -->
 				</tr>
 
 				<tr>
@@ -69,4 +94,3 @@ div {
 	</div>
 </body>
 </html>
-

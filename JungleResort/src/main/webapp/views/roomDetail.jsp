@@ -10,17 +10,17 @@
 		<div>
 			<!-- <div class="row">
 				<div class="col-md-9"> -->
-					<div class="row">
+			<div class="row">
 
-						<c:forEach items="${room.image2}" var="imagesSet">
-							<div class="col-md-4">
-								<img alt="image" height="225px" width="225px"
-									src="data:image/jpeg; base64,${imagesSet.encodeImage3}" />
-							</div>
-						</c:forEach>
-
+				<c:forEach items="${room.image2}" var="imagesSet">
+					<div class="col-md-4">
+						<img alt="image" height="225px" width="225px"
+							src="data:image/jpeg; base64,${imagesSet.encodeImage3}" />
 					</div>
-				<!-- </div>
+				</c:forEach>
+
+			</div>
+			<!-- </div>
 			</div> -->
 			<div class="row">
 				<div class="col-md-8">
@@ -50,10 +50,21 @@
 					</div> --%>
 				</div>
 				<div></div>
-
+				s
 			</div>
 			<div>
-				<form action="booking/${room.roomNo}" method="post">
+			
+				<form
+					<c:choose>
+    <c:when test="${empty user}">
+       action="/customerlogin/${room.id}" method="get"
+    </c:when>
+    <c:otherwise>
+        action="/booking/${user.username}/${room.id}" method="post"
+    </c:otherwise>
+</c:choose>
+					>
+					<input type="hidden" value="${room.id}" name="roomid"/>
 					<input type="submit" class="btn btn-success" value="Book Now">
 				</form>
 			</div>

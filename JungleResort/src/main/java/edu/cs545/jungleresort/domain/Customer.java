@@ -1,4 +1,5 @@
 package edu.cs545.jungleresort.domain;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -25,7 +27,8 @@ public class Customer {
 	@Size(min = 6, message = "Name should be at least 6 characters long")
 	private String name;
 	
-	@Size(min = 6, message = "Username should be at least 6 characters long")
+	@NotEmpty(message = "Please enter Username")
+	@Column(unique = true)
 	private String username;
 	
 	@Size(min = 6, message = "Password should be at least 6 characters long")
@@ -38,7 +41,7 @@ public class Customer {
 	@Email(message = "Invalid email")
 	private String email;
 	
-	@Size(min = 6, max = 10, message = "Phone No Cannot be empty")
+	@Size(min = 6, max = 10, message = "Phone must be 6 to 10 digits")
 	private String phoneNumber;
 	
 	
