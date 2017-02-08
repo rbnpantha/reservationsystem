@@ -2,7 +2,16 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <title>Room Detail</title>
-
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$(".datepicker").datepicker();
+	});
+</script>
 
 <hr>
 <div class="container">
@@ -23,7 +32,7 @@
 			<!-- </div>
 			</div> -->
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-6">
 					<div>
 						<h1>${room.roomNo}</h1>
 					</div>
@@ -49,11 +58,6 @@
 							<span>Condition : </span>${room.condition}</div>
 					</div> --%>
 				</div>
-				<div></div>
-				s
-			</div>
-			<div>
-			
 				<form
 					<c:choose>
     <c:when test="${empty user}">
@@ -62,10 +66,26 @@
     <c:otherwise>
         action="/booking/${user.username}/${room.id}" method="post"
     </c:otherwise>
-</c:choose>
-					>
-					<input type="hidden" value="${room.id}" name="roomid"/>
-					<input type="submit" class="btn btn-success" value="Book Now">
+</c:choose>>
+					<div class="row">
+						<br />
+						<div class="col-md-6">
+							<br /> <br /> <span>Start Date : <input type="text"
+								class="datepicker" name="startDate"></span>
+						</div>
+						<div class="col-md-6">
+							<br /> <br /> <span>End Date : <input type="text"
+								class="datepicker" name="endDate"></span>
+						</div>
+					</div>
+					<div></div>
+					s
+			</div>
+			<div>
+
+
+				<input type="hidden" value="${room.id}" name="roomid" /> <input
+					type="submit" class="btn btn-success" value="Book Now">
 				</form>
 			</div>
 		</div>

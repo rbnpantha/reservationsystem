@@ -54,6 +54,11 @@
 						<input type="submit" value="Update" />
 					</form>
 				</td>
+				<td>
+					<form action="/roomDetail/${availablerooms.id}">
+						<input type="submit" value="Detail" />
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -1,5 +1,7 @@
 package edu.cs545.jungleresort.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,18 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public void deleteBookingById(int bookingId) {
 		bookingdao.delete(bookingId);
+	}
+
+	@Override
+	public Booking getBookingById(int bookingId) {
+		// TODO Auto-generated method stub
+		return bookingdao.findOne(bookingId);
+	}
+
+	@Override
+	public List<Booking> getBookingByCustomerId(int customerId) {
+		// TODO Auto-generated method stub
+		return bookingdao.findByCustomerId(customerId);
 	}
 
 }

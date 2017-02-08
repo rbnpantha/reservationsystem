@@ -18,17 +18,16 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-	<table>
-		<tr>
-			<td colspan="2"><tiles:insertAttribute name="header" /></td>
-		</tr>
-		<tr>
-			<%-- <td><tiles:insertAttribute name="menu" /></td> --%>
-			<td><tiles:insertAttribute name="body" /></td>
-		</tr>
-		<tr>
-			<td colspan="2"><tiles:insertAttribute name="footer" /></td>
-		</tr>
-	</table>
+	<div>
+		<tiles:insertAttribute name="header" />
+	</div>
+
+	<div>
+		<tiles:insertAttribute name="body" />
+	</div>
+	
+	<div>
+		<tiles:insertAttribute name="footer" />
+	</div>
 </body>
 </html>

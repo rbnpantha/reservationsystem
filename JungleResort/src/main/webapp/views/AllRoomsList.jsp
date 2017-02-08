@@ -50,11 +50,11 @@
 						<input type="submit" value="Update" />
 					</form>
 				</td>
-				<td>
+				<%-- <td>
 					<form action="/roomDetail/${allrooms.id}">
 						<input type="submit" value="Detail" />
 					</form>
-				</td>
+				</td> --%>
 			</tr>
 		</c:forEach>
 	</table>

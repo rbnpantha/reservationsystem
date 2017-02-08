@@ -1,25 +1,36 @@
 package edu.cs545.jungleresort.serviceImpl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.cs545.jungleresort.DAO.BookingDAO;
 import edu.cs545.jungleresort.DAO.RoomDAO;
+import edu.cs545.jungleresort.domain.Booking;
 import edu.cs545.jungleresort.domain.Room;
 import edu.cs545.jungleresort.enumeration.RoomStatus;
 import edu.cs545.jungleresort.service.IRoomService;
 
 @Service
 @Transactional
-public class RoomServiceImpl implements IRoomService{
+public class RoomServiceImpl implements IRoomService {
 
 	@Autowired
 	private RoomDAO roomdao;
-	
+
+	@Autowired
+	private BookingDAO bookingDao;
+
 	@Override
 	public Room addRoom(Room room) {
 		return roomdao.save(room);
@@ -42,13 +53,35 @@ public class RoomServiceImpl implements IRoomService{
 
 	@Override
 	public List<Room> getAllAvailableRoom() {
-		List<Room> allRooms=  (List<Room>) roomdao.findAll();
-		List<Room> avaialbleRooms= new ArrayList<Room>();
-		for(Room r: allRooms){
-			if(r.getRoomStatus().equals(RoomStatus.Available)){
+		List<Room> allRooms = (List<Room>) roomdao.findAll();
+		List<Room> avaialbleRooms = new ArrayList<Room>();
+		for (Room r : allRooms) {
+			if (r.getRoomStatus().equals(RoomStatus.Available)) {
 				avaialbleRooms.add(r);
 			}
 		}
-		return avaialbleRooms ;
-	}	
+		return avaialbleRooms;
+	}
+
+	@Override
+	public void scheduledTask() {
+		System.out.println("inside task schedular !!");
+		List<Booking> bookingList = (List<Booking>) bookingDao.findAll();
+
+		for (Booking booking : bookingList) {
+			if (booking.getEndDate() != null) {
+
+				Date today = Calendar.getInstance().getTime();
+				System.out.println("Todays date is : " + today);
+				System.out.println("Date in the end Date : " + booking.getEndDate());
+				if ((today).compareTo((Date) booking.getEndDate()) > 0) {
+					System.out.println("today is after endDate");
+					Room room = (Room) roomdao.findRoomByNumber(booking.getRoomId());
+					room.setRoomStatus(RoomStatus.Available);
+
+					roomdao.save(room);
+				}
+			}
+		}
+	}
 }

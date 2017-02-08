@@ -3,8 +3,11 @@ package edu.cs545.jungleresort.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sun.el.parser.ParseException;
+
+import edu.cs545.jungleresort.DAO.CustomerDAO;
 import edu.cs545.jungleresort.domain.Booking;
 import edu.cs545.jungleresort.domain.Customer;
 import edu.cs545.jungleresort.domain.Images;
@@ -35,6 +41,7 @@ import edu.cs545.jungleresort.enumeration.RoomStatus;
 import edu.cs545.jungleresort.library.ByteToMultipart;
 import edu.cs545.jungleresort.service.BookingService;
 import edu.cs545.jungleresort.service.ICustomerService;
+import edu.cs545.jungleresort.service.MailClient;
 import edu.cs545.jungleresort.serviceImpl.RoomServiceImpl;
 
 @Controller
@@ -47,6 +54,8 @@ public class RoomController {
 	BookingService bookingService;
 	@Autowired
 	ServletContext servletContext;
+	@Autowired
+	MailClient mailClient;
 
 	@ModelAttribute("roomFeaturesTrans")
 	public List<RoomFeatures> roomFeatures() {
@@ -72,25 +81,47 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/booking/{username}/{roomId}", method = RequestMethod.POST)
-	public String booking(@PathVariable("roomId") int roomId, @PathVariable("username") String userName, Booking booking, HttpServletRequest request) {
+	public String booking(@PathVariable("roomId") int roomId, @PathVariable("username") String userName,
+			Booking booking, @RequestParam("startDate") String startDateString, @RequestParam("endDate") String endDateString,
+			HttpServletRequest request) throws java.text.ParseException {
+
+		//String startDateString = request.getParameter("startDate");
+		//String endDateString = request.getParameter("endDate");
+		System.out.println("StartDate " + startDateString + "EndDate " + endDateString
+				+ " inside booking room controller !!88888888888888888888888888888888888");
 		
-		System.out.println("Room Id "+ roomId+ "userId "+ userName +  " inside booking room controller !!88888888888888888888888888888888888");
+		Customer customer = customerService.getCustomerByUserName(userName);
+		System.out.println(" customer name : " + customer.getEmail());
+		booking.setRoomId(roomId);
+		booking.setCustomerId(customer.getCustomerId());
+		
+	    DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
+	    
+	    booking.setStartDate(df.parse(startDateString));
+		booking.setEndDate(df.parse(endDateString));
+		
+		/*String startingDateString = "06/27/2007";
+	    DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
+	    Date startingDate;
+	    startingDate = df.parse(startDateString);
+		String newDateString = df.format(startingDateString);
+		System.out.println("test ----- " +newDateString);
+		booking.setStartDate(startingDate);
+		booking.setEndDate(startingDate);*/
+		
 		Room myRoom = roomService.getRoomById(roomId);
 		myRoom.setId(roomId);
 		myRoom.setRoomStatus(RoomStatus.Rented);
-		HttpSession session = request.getSession(true);
-		Customer customer2  = (Customer) request.getSession(false).getAttribute("user");
+		/*
+		 * HttpSession session = request.getSession(true); Customer customer2 =
+		 * (Customer) request.getSession(false).getAttribute("user");
+		 */
 		
-		Customer customer = customerService.getCustomerByUserName(userName);
-		booking.setRoomId(roomId);
-		booking.setCustomerId(customer.getCustomerId());
-		//booking.setStartDate(startDate);
-		//booking.setEndDate(endDate);
-		
-		System.out.println("********************** The user Name is : "+customer2.getName());
 		bookingService.saveBooking(booking);
 		roomService.addRoom(myRoom);
-		return "redirect:/allroomslist";
+		mailClient.sendMail(customer.getEmail(), "Thank for booking room!!", "This is an automated email send to you "
+				+ "since you booked a room in Hotel Ceraton !!");
+		return "redirect:/availableroomslist";
 	}
 
 	public boolean checkJPEG(MultipartFile tempImg) {

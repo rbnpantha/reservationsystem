@@ -1,6 +1,5 @@
 package edu.cs545.jungleresort.DAO;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +12,7 @@ import edu.cs545.jungleresort.domain.Room;
 public interface RoomDAO extends CrudRepository<Room, Integer>{
 	
 	@Query("FROM Room r WHERE r.roomNo= :roomNo")
-	public List<Room> findRoomByNumber(@Param("roomNo") Integer roomNo);
+	public Room findRoomByNumber(@Param("roomNo") Integer roomNo);
 	
 	
 }

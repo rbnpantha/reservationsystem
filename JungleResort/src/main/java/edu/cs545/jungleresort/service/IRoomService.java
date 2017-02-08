@@ -10,4 +10,5 @@ public interface IRoomService {
 	public Room getRoomById(int id);
 	public List<Room> getAllRoom();
 	public List<Room> getAllAvailableRoom();
+	public void scheduledTask();
 }
