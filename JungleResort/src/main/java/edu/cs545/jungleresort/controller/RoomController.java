@@ -70,8 +70,12 @@ public class RoomController {
 
 	@RequestMapping(value = "/addroom", method = RequestMethod.GET)
 	public String addRoom(@ModelAttribute("room") Room room,
-			@ModelAttribute("roomFeaturesTrans") List<RoomFeatures> roomFeaturesTrans) {
-		return "addRoom";
+			@ModelAttribute("roomFeaturesTrans") List<RoomFeatures> roomFeaturesTrans, HttpSession session) {
+		/*if(session.getAttribute("user")!=null && session.getAttribute("user").equals(true))
+		{*/
+			return "addRoom";	
+		/*}
+		return "redirect:/adminlogin";*/
 	}
 
 	@RequestMapping(value = "/addroom/servererror", method = RequestMethod.GET)
@@ -259,19 +263,27 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/allroomslist", method = { RequestMethod.GET })
-	public String allRoomsList(Map<String, Object> model, Model m) throws UnsupportedEncodingException {
-		byte[] encodeBasee64;
-		String base64EncodeImage;
-		for (Room room : roomService.getAllAvailableRoom()) {
-			for (Images image : room.getImage2()) {
-				encodeBasee64 = Base64.encode(image.getImage3());
-				base64EncodeImage = new String(encodeBasee64, "UTF-8");
-				image.setEncodeImage3(base64EncodeImage);
+	public String allRoomsList(Map<String, Object> model, Model m, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+		
+		
+		/*if(session.getAttribute("user")!=null && session.getAttribute("user").equals(true))
+		{*/
+			
+			byte[] encodeBasee64;
+			String base64EncodeImage;
+			for (Room room : roomService.getAllAvailableRoom()) {
+				for (Images image : room.getImage2()) {
+					encodeBasee64 = Base64.encode(image.getImage3());
+					base64EncodeImage = new String(encodeBasee64, "UTF-8");
+					image.setEncodeImage3(base64EncodeImage);
+				}
 			}
-		}
 
-		model.put("allrooms", roomService.getAllRoom());
-		return "AllRoomsList";
+			model.put("allrooms", roomService.getAllRoom());
+			return "AllRoomsList";
+		/*}
+		return "redirect:/adminlogin";*/
+		
 	}
 
 	@RequestMapping("/deleteroom/{id}")
