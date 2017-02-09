@@ -4,59 +4,75 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-	<h1>All Rooms list</h1>
-	<table>
-		<tr>
-			<th>Room No.</th>
-			<th>Room Type</th>
-			<th>Room Status</th>
-			<th>Room Category</th>
-			<th>Daily Rent</th>
-			<th>Guest Capacity</th>
-			<th>Room Features</th>
-			<th>Images List</th>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
-		</tr>
-		<c:forEach items="${allrooms}" var="allrooms">
+<div class="container" style="margin-top: 100px">
+	<h2>All Rooms list</h2>
+	<table id="roomTable" class="display">
+		<thead>
 			<tr>
-				<td>${allrooms.roomNo}</td>
-				<td>${allrooms.roomType}</td>
-				<td>${allrooms.roomStatus}</td>
-				<td>${allrooms.roomCategory}</td>
-				<td>${allrooms.dailyRent}</td>
-				<td>${allrooms.guestNo}</td>
-				<td><c:forEach var="roomFeatures"
-						items="${allrooms.roomFeatures}">
-						<c:out value="${roomFeatures}" />
-					</c:forEach></td>
+				<th>Room No.</th>
+				<th>Room Type</th>
+				<th>Room Status</th>
+				<th>Room Category</th>
+				<th>Daily Rent</th>
+				<th>Guest Capacity</th>
+				<th>Room Features</th>
+				<th>Images List</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${allrooms}" var="allrooms">
+				<tr>
+					<td>${allrooms.roomNo}</td>
+					<td>${allrooms.roomType}</td>
+					<td>${allrooms.roomStatus}</td>
+					<td>${allrooms.roomCategory}</td>
+					<td>${allrooms.dailyRent}</td>
+					<td>${allrooms.guestNo}</td>
+					<td><c:forEach var="roomFeatures"
+							items="${allrooms.roomFeatures}">
+							<c:out value="${roomFeatures}" />
+						</c:forEach></td>
 
 
-				<!-- 				<td><img alt="image" height="30px" width="30px" -->
-				<%-- 					src="data:image/jpeg; base64,${allrooms.encodeImage}" /></td> --%>
-				<td><c:forEach items="${allrooms.image2}" var="imagesSet">
-						<img alt="image" height="30px" width="30px"
-							src="data:image/jpeg; base64,${imagesSet.encodeImage3}" />
-					</c:forEach></td>
+					<!-- 				<td><img alt="image" height="30px" width="30px" -->
+					<%-- 					src="data:image/jpeg; base64,${allrooms.encodeImage}" /></td> --%>
+					<td><c:forEach items="${allrooms.image2}" var="imagesSet">
+							<img alt="image" height="30px" width="30px"
+								src="data:image/jpeg; base64,${imagesSet.encodeImage3}" />
+						</c:forEach></td>
 
-				<td>
-					<form action="/deleteroom/${allrooms.id}">
-						<input type="submit" value="Delete" />
-					</form>
-				</td>
-				<td>
-					<form action="/updateroom/${allrooms.id}">
-						<input type="submit" value="Update" />
-					</form>
-				</td>
-				<%-- <td>
+					<td>
+						<form action="/deleteroom/${allrooms.id}">
+							<input type="submit" value="Delete" />
+						</form>
+					</td>
+					<td>
+						<form action="/updateroom/${allrooms.id}">
+							<input type="submit" value="Update" />
+						</form>
+					</td>
+					<%-- <td>
 					<form action="/roomDetail/${allrooms.id}">
 						<input type="submit" value="Detail" />
 					</form>
 				</td> --%>
-			</tr>
-		</c:forEach>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 
 	<div>
@@ -64,3 +80,10 @@
 			<input type="submit" value="Add New Room" />
 		</form>
 	</div>
+
+</div>
+<script>
+	$(document).ready(function() {
+		var table = $('#roomTable').DataTable()
+	});
+</script>

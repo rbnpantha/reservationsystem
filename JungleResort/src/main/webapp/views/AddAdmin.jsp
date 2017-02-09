@@ -7,7 +7,8 @@
 <html>
 <head>
 <title>Add Admin</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <style>
 body {
 	background-color: #f2f2f2;
@@ -35,26 +36,21 @@ div {
 </style>
 
 <script>
-$(document).ready(function() {
-	  $("#password2").keyup(validate);
+	$(document).ready(function() {
+		$("#password2").keyup(validate);
 	});
 
-
 	function validate() {
-	  var password1 = $("#password1").val();
-	  var password2 = $("#password2").val();
+		var password1 = $("#password1").val();
+		var password2 = $("#password2").val();
 
-	    
-	 
-	    if(password1 == password2) {
-	       $("#validate-status").text("password match");        
-	    }
-	    else {
-	        $("#validate-status").text("password mismatch");  
-	    }
-	    
+		if (password1 == password2) {
+			$("#validate-status").text("password match");
+		} else {
+			$("#validate-status").text("password mismatch");
+		}
+
 	}
-
 </script>
 </head>
 
@@ -65,31 +61,35 @@ $(document).ready(function() {
 		<form:form modelAttribute="admin" method="POST" action="addadmin">
 			<!-- 			<h2> Language : <a href="?lang=en">English</a>|<a href="?lang=np">Nepali</a></h2> -->
 			<!-- 			<h2>Add Car Information</h2> -->
-			<table>
+			<div class="form-group">
 
-				<tr>
-					<td><form:label path="username">UserName</form:label></td>
-					<td><form:input path="username" name="username" type="text" /></td>
-					<td><form:errors path="username" cssStyle="color:red;" /><span class="colorRed">${userexists}</span></td>
-				</tr>
+				<div>
+					<span><form:label path="username">UserName</form:label></span> <span><form:input
+							class="form-control" path="username" name="username" type="text" /></span>
+					<span><form:errors path="username" cssStyle="color:red;" /><span
+						class="colorRed">${userexists}</span></span>
+				</div>
 
-				<tr>
-					<td><form:label path="password">Password</form:label></td>
-					<td><form:input path="password" type="password" value="" id="password1"/></td>
-					<td><form:errors path="password" cssStyle="color:red;" /></td>
-				</tr>
+				<div>
+					<span><form:label path="password">Password</form:label></span> <span><form:input
+							class="form-control" path="password" type="password" value=""
+							id="password1" /></span> <span><form:errors path="password"
+							cssStyle="color:red;" /></span>
+				</div>
 
-				<tr>
-					<td><form:label path="confirmPassword">Confirm Password</form:label></td>
-					<td><form:input path="confirmPassword" type="password" value="" id="password2"/></td>
-					<td><span class="colorRed" id="validate-status">${passmismatch}</span></td>
-<!-- 					<td><span ></span></td> -->
-				</tr>
+				<div>
+					<span><form:label path="confirmPassword">Confirm Password</form:label></span>
+					<span><form:input class="form-control"
+							path="confirmPassword" type="password" value="" id="password2" /></span>
+					<span><span class="colorRed" id="validate-status">${passmismatch}</span></span>
+					<!-- 					<span><span ></span></span> -->
+				</div>
 
-				<tr>
-					<td colspan="2"><input type="submit" value="Register" /></td>
-				</tr>
-			</table>
+				<div>
+					<span><input class="form-control btn btn-success" type="submit"
+						value="Register" /></span>
+				</div>
+			</div>
 		</form:form>
 	</div>
 </body>

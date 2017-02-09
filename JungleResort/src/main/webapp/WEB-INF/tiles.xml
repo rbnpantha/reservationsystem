@@ -5,7 +5,7 @@
 
 <tiles-definitions>
 	<definition name="homepage" template="/layouts/template.jsp">
-		<put-attribute name="title" value="Rabin's homepage" />
+		<put-attribute name="title" value="Jungle Side Resort" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<!-- <put-attribute name="menu" value="/tiles/menu.jsp" /> -->
 		<put-attribute name="body" value="/views/home.jsp" />
@@ -13,7 +13,7 @@
 	</definition>
 	
 	<definition name="profile" template="/layouts/template.jsp">
-		<put-attribute name="title" value="Rabin's homepage" />
+		<put-attribute name="title" value="User Profile" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<!-- <put-attribute name="menu" value="/tiles/menu.jsp" /> -->
 		<put-attribute name="body" value="/views/profile.jsp" />
@@ -21,7 +21,7 @@
 	</definition>
 	
 	<definition name="CustomerLogin" template="/layouts/template.jsp">
-		<put-attribute name="title" value="Rabin's homepage" />
+		<put-attribute name="title" value="User Login" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<!-- <put-attribute name="menu" value="/tiles/menu.jsp" /> -->
 		<put-attribute name="body" value="/views/CustomerLogin.jsp" />
@@ -29,7 +29,7 @@
 	</definition>
 	
 	<definition name="AdminLogin" template="/layouts/template.jsp">
-		<put-attribute name="title" value="Rabin's homepage" />
+		<put-attribute name="title" value="Admin Login" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<!-- <put-attribute name="menu" value="/tiles/menu.jsp" /> -->
 		<put-attribute name="body" value="/views/AdminLogin.jsp" />
@@ -37,7 +37,7 @@
 	</definition>
 	
 	<definition name="AddCustomer" template="/layouts/template.jsp">
-		<put-attribute name="title" value="Rabin's homepage" />
+		<put-attribute name="title" value="Add Customer" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<!-- <put-attribute name="menu" value="/tiles/menu.jsp" /> -->
 		<put-attribute name="body" value="/views/AddCustomer.jsp" />
@@ -45,7 +45,7 @@
 	</definition>
 
 <definition name="AddAdmin" template="/layouts/template.jsp">
-		<put-attribute name="title" value="Rabin's homepage" />
+		<put-attribute name="title" value="Add Admin" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<!-- <put-attribute name="menu" value="/tiles/menu.jsp" /> -->
 		<put-attribute name="body" value="/views/AddAdmin.jsp" />

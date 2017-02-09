@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.cs545.jungleresort.DAO.CustomerDAO;
 import edu.cs545.jungleresort.domain.Customer;
 import edu.cs545.jungleresort.service.BookingService;
+import edu.cs545.jungleresort.service.ICustomerService;
 
 @Controller
 public class CustomerController {
 	@Autowired
-	CustomerDAO customerdao;
+	ICustomerService customerService;
 	
 	@Autowired
 	BookingService bookingService;
@@ -30,6 +31,7 @@ public class CustomerController {
 	@RequestMapping(value = "/profile/{customerId}", method = RequestMethod.GET)
 	public String getProfile(Model model, @PathVariable("customerId") int customerId) {
 		model.addAttribute("booking", bookingService.getBookingByCustomerId(customerId));
+		model.addAttribute("customer", customerService.getCustomerById(customerId));
 		return "profile";
 	}
 
@@ -39,7 +41,7 @@ public class CustomerController {
 		if (customer.getPassword().equals(customer.getConfirmPassword())) {
 			if (!result.hasErrors()) {
 				try{
-				customerdao.save(customer);
+					customerService.addCustomer(customer);
 				view= "redirect:/customerlogin";
 				}
 				catch(Exception e){
