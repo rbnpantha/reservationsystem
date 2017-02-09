@@ -7,7 +7,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
-<div class="container" style="margin-top: 200px; margin-left: 70px;">
+<div class="container" style="margin-top: 100px;">
 
 	<form:form modelAttribute="room" method="POST" action="addroom"
 		enctype="multipart/form-data">

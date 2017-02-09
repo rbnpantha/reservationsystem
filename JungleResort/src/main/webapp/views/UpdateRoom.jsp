@@ -6,7 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
-<div class="container" style="margin-top: 150px; margin-left: 70px;">
+<div class="container" style="margin-top: 100px;">
 	<div class="form-group">
 		<form:form modelAttribute="room" method="POST"
 			action="/updateroom/${room.id}" enctype="multipart/form-data">
@@ -77,7 +77,7 @@
 				</div>
 
 				<div>
-					<span><input class="form-control btn btn-submit" type="submit"
+					<span><input class="form-control btn btn-success" type="submit"
 						value="Submit" /></span>
 				</div>
 

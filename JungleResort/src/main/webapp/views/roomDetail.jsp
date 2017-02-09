@@ -15,7 +15,7 @@
 
 <hr>
 <div class="container">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-8 col-md-offset-2" style="margin-top: 100px">
 		<div>
 			<!-- <div class="row">
 				<div class="col-md-9"> -->
@@ -34,7 +34,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div>
-						<h1>${room.roomNo}</h1>
+						<h1>Room No : ${room.roomNo}</h1>
 					</div>
 					<div>
 						<span>Price : $</span>${room.dailyRent}</div>
@@ -79,7 +79,7 @@
 						</div>
 					</div>
 					<div></div>
-					s
+					
 			</div>
 			<div>
 

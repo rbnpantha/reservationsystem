@@ -24,7 +24,7 @@ import edu.cs545.jungleresort.service.ICustomerService;
 
 @Controller
 public class LoginController {
-	
+
 	int roomId = -1;
 	@Autowired
 	IAdminService adminservice;
@@ -41,6 +41,8 @@ public class LoginController {
 	public String adminLoginPost(@CookieValue(value = "username", defaultValue = "") String username, Model model,
 			HttpSession session, @ModelAttribute Admin admin, boolean remember, HttpServletResponse response) {
 
+		System.out.println("Admin username = " + admin.getUsername());
+		System.out.println("Admin password = " + admin.getPassword());
 		if (adminservice.loginAuthenticate(admin.getUsername(), admin.getPassword())) {
 			System.out.println("login auth successful");
 			if (remember && username.isEmpty()) {
@@ -54,12 +56,13 @@ public class LoginController {
 				cookie.setMaxAge(0);
 				response.addCookie(cookie);
 			}
-			session.setAttribute("user", admin);
-
+			session.setAttribute("adminSession", admin);
+			System.out.println("Inside Admin Login after session!!");
 			// redirectAttributes.addFlashAttribute("usernameFlash",
 			// user.getUsername());
 			return "redirect:/allroomslist";
 		} else {
+			System.out.println("Inside Admin Login Before session --- Login failed!!");
 			System.out.println("loginFailed");
 			model.addAttribute("loginfail", "Username/password is incorrect");
 			return "AdminLogin";
@@ -70,15 +73,16 @@ public class LoginController {
 	public String customerLoginGet() {
 		return "CustomerLogin";
 	}
+
 	@RequestMapping(value = "/customerlogin/{roomId}", method = RequestMethod.GET)
 	public String customerAuthenticate(Model model, @PathVariable("roomId") int id) {
-		
+
 		System.out.println("8888888888888888888888888888888888888888 " + id + " 77777777777777777777");
-		//model.addAttribute("roomId", id);
+		// model.addAttribute("roomId", id);
 		roomId = id;
 		return "CustomerLogin";
 	}
-	
+
 	@RequestMapping(value = "/customerlogin", method = RequestMethod.POST)
 	public String customerLoginPost(@CookieValue(value = "username", defaultValue = "") String username, Model model,
 			HttpSession session, @ModelAttribute Customer customer, boolean remember, HttpServletRequest request,
@@ -101,9 +105,9 @@ public class LoginController {
 			// redirectAttributes.addFlashAttribute("usernameFlash",
 			// user.getUsername());
 
-			System.out.println("898988989898989888989898989 " + roomId +" 78787787878777878");
-			if(roomId > 0){
-				return "redirect:/roomDetail/"+roomId;
+			System.out.println("898988989898989888989898989 " + roomId + " 78787787878777878");
+			if (roomId > 0) {
+				return "redirect:/roomDetail/" + roomId;
 			}
 			return "redirect:/availableroomslist";
 		} else {
@@ -112,7 +116,6 @@ public class LoginController {
 			return "CustomerLogin";
 		}
 	}
-
 
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {

@@ -6,12 +6,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <script
 	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -57,12 +51,12 @@
 
 					<td>
 						<form action="/deleteroom/${allrooms.id}">
-							<input type="submit" value="Delete" />
+							<input class="btn btn-danger type="submit" value="Delete" />
 						</form>
 					</td>
 					<td>
 						<form action="/updateroom/${allrooms.id}">
-							<input type="submit" value="Update" />
+							<input type="submit" class="btn btn-info btn-bg" value="Update" />
 						</form>
 					</td>
 					<%-- <td>
@@ -77,7 +71,7 @@
 
 	<div>
 		<form action="/addroom">
-			<input type="submit" value="Add New Room" />
+			<input type="submit" class="btn btn-success" value="Add New Room" />
 		</form>
 	</div>
 

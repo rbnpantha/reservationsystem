@@ -6,16 +6,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <script
 	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
+<section>
 <div class="container" style="margin-top: 100px">
 	<h2>All Available Rooms list</h2>
 	<table id="roomTable" class="display">
@@ -64,6 +58,7 @@
 		</tbody>
 	</table>
 </div>
+</section>
 <script>
 	$(document).ready(function() {
 		var table = $('#roomTable').DataTable()

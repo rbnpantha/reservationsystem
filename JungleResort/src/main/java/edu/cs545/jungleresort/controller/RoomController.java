@@ -71,11 +71,14 @@ public class RoomController {
 	@RequestMapping(value = "/addroom", method = RequestMethod.GET)
 	public String addRoom(@ModelAttribute("room") Room room,
 			@ModelAttribute("roomFeaturesTrans") List<RoomFeatures> roomFeaturesTrans, HttpSession session) {
-		/*if(session.getAttribute("user")!=null && session.getAttribute("user").equals(true))
-		{*/
-			return "addRoom";	
-		/*}
-		return "redirect:/adminlogin";*/
+		/*
+		 * if(session.getAttribute("user")!=null &&
+		 * session.getAttribute("user").equals(true)) {
+		 */
+		return "addRoom";
+		/*
+		 * } return "redirect:/adminlogin";
+		 */
 	}
 
 	@RequestMapping(value = "/addroom/servererror", method = RequestMethod.GET)
@@ -84,50 +87,55 @@ public class RoomController {
 		return "AddRoom";
 	}
 
-	@RequestMapping(value = "/booking/{username}/{roomId}", method = RequestMethod.POST)
-	public String booking(@PathVariable("roomId") int roomId, @PathVariable("username") String userName,
-			Booking booking, @RequestParam("startDate") String startDateString, @RequestParam("endDate") String endDateString,
-			HttpServletRequest request) throws java.text.ParseException {
-
-		//String startDateString = request.getParameter("startDate");
-		//String endDateString = request.getParameter("endDate");
-		System.out.println("StartDate " + startDateString + "EndDate " + endDateString
-				+ " inside booking room controller !!88888888888888888888888888888888888");
-		
-		Customer customer = customerService.getCustomerByUserName(userName);
-		System.out.println(" customer name : " + customer.getEmail());
-		booking.setRoomId(roomId);
-		booking.setCustomerId(customer.getCustomerId());
-		
-	    DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
-	    
-	    booking.setStartDate(df.parse(startDateString));
-		booking.setEndDate(df.parse(endDateString));
-		
-		/*String startingDateString = "06/27/2007";
-	    DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
-	    Date startingDate;
-	    startingDate = df.parse(startDateString);
-		String newDateString = df.format(startingDateString);
-		System.out.println("test ----- " +newDateString);
-		booking.setStartDate(startingDate);
-		booking.setEndDate(startingDate);*/
-		
-		Room myRoom = roomService.getRoomById(roomId);
-		myRoom.setId(roomId);
-		myRoom.setRoomStatus(RoomStatus.Rented);
-		/*
-		 * HttpSession session = request.getSession(true); Customer customer2 =
-		 * (Customer) request.getSession(false).getAttribute("user");
-		 */
-		
-		bookingService.saveBooking(booking);
-		roomService.addRoom(myRoom);
-		mailClient.sendMail(customer.getEmail(), "Thank for booking room!!", "This is an automated email send to you "
-				+ "since you booked a room in Hotel Ceraton !!");
-		return "redirect:/availableroomslist";
-	}
-
+	/*
+	 * @RequestMapping(value = "/booking/{username}/{roomId}", method =
+	 * RequestMethod.POST) public String booking(@PathVariable("roomId") int
+	 * roomId, @PathVariable("username") String userName, Booking
+	 * booking, @RequestParam("startDate") String startDateString,
+	 * 
+	 * @RequestParam("endDate") String endDateString, HttpServletRequest
+	 * request) throws java.text.ParseException {
+	 * 
+	 * // String startDateString = request.getParameter("startDate"); // String
+	 * endDateString = request.getParameter("endDate");
+	 * System.out.println("StartDate " + startDateString + "EndDate " +
+	 * endDateString +
+	 * " inside booking room controller !!88888888888888888888888888888888888");
+	 * Room room = roomService.getRoomById(roomId); Customer customer =
+	 * customerService.getCustomerByUserName(userName);
+	 * System.out.println(" customer name : " + customer.getEmail());
+	 * booking.setRoomId(room.getId()); booking.setRoomNo(room.getRoomNo());
+	 * booking.setGuestNo(room.getGuestNo());
+	 * booking.setRoomType(room.getRoomType());
+	 * booking.setCustomerId(customer.getCustomerId());
+	 * 
+	 * DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+	 * 
+	 * booking.setStartDate(df.parse(startDateString));
+	 * booking.setEndDate(df.parse(endDateString));
+	 * 
+	 * 
+	 * String startingDateString = "06/27/2007"; DateFormat df = new
+	 * SimpleDateFormat("MM/dd/yyyy"); Date startingDate; startingDate =
+	 * df.parse(startDateString); String newDateString =
+	 * df.format(startingDateString); System.out.println("test ----- "
+	 * +newDateString); booking.setStartDate(startingDate);
+	 * booking.setEndDate(startingDate);
+	 * 
+	 * 
+	 * Room myRoom = roomService.getRoomById(roomId); myRoom.setId(roomId);
+	 * myRoom.setRoomStatus(RoomStatus.Rented);
+	 * 
+	 * HttpSession session = request.getSession(true); Customer customer2 =
+	 * (Customer) request.getSession(false).getAttribute("user");
+	 * 
+	 * 
+	 * bookingService.saveBooking(booking); roomService.addRoom(myRoom);
+	 * mailClient.sendMail(customer.getEmail(), "Thank for booking room!!",
+	 * "This is an automated email send to you " +
+	 * "since you booked a room in Hotel Ceraton !!"); return
+	 * "redirect:/availableroomslist"; }
+	 */
 	public boolean checkJPEG(MultipartFile tempImg) {
 		String fileName = tempImg.getContentType().toLowerCase();
 		return fileName.equals("image/jpg") || fileName.equals("image/jpeg") || fileName.equals("image/png");
@@ -263,12 +271,12 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/allroomslist", method = { RequestMethod.GET })
-	public String allRoomsList(Map<String, Object> model, Model m, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
-		
-		
-		/*if(session.getAttribute("user")!=null && session.getAttribute("user").equals(true))
-		{*/
-			
+	public String allRoomsList(Map<String, Object> model, Model m, HttpServletRequest request, HttpSession session)
+			throws UnsupportedEncodingException {
+
+		System.out.println("admin session credentials " + session.getAttribute("adminSession"));
+		if (session.getAttribute("adminSession") != null) {
+
 			byte[] encodeBasee64;
 			String base64EncodeImage;
 			for (Room room : roomService.getAllAvailableRoom()) {
@@ -281,9 +289,9 @@ public class RoomController {
 
 			model.put("allrooms", roomService.getAllRoom());
 			return "AllRoomsList";
-		/*}
-		return "redirect:/adminlogin";*/
-		
+		}
+		return "redirect:/adminlogin";
+
 	}
 
 	@RequestMapping("/deleteroom/{id}")

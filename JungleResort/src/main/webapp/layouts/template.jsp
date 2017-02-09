@@ -15,14 +15,7 @@
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
 	 --%>
-	 
-	 <!-- css and js for profile page -->
-	 <link
-	href="${pageContext.request.contextPath}/resources/css/profile.css"
-	rel="stylesheet">
-	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/profile.js"></script>
-	 
+	  
 	 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

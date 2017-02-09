@@ -4,37 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<html>
-<head>
-<title>Add Admin</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<style>
-body {
-	background-color: #f2f2f2;
-}
-
-form {
-	width: 50%;
-	margin-right: 15%;
-	margin-left: 35%;
-}
-
-input[type=submit]:hover {
-	background-color: #45a049;
-}
-
-div {
-	border-radius: 5px;
-	background-color: #f2f2f2;
-	padding: 20px;
-}
-
-.colorRed {
-	color: red;
-}
-</style>
-
 <script>
 	$(document).ready(function() {
 		$("#password2").keyup(validate);
@@ -52,18 +21,14 @@ div {
 
 	}
 </script>
-</head>
-
-
-
-<body>
-	<div>
+<div class="container" style="margin-top: 100px">
+	<div class="row">
 		<form:form modelAttribute="admin" method="POST" action="addadmin">
 			<!-- 			<h2> Language : <a href="?lang=en">English</a>|<a href="?lang=np">Nepali</a></h2> -->
-			<!-- 			<h2>Add Car Information</h2> -->
+			<h2>Admin Registration</h2>
 			<div class="form-group">
 
-				<div>
+				<div class="span4">
 					<span><form:label path="username">UserName</form:label></span> <span><form:input
 							class="form-control" path="username" name="username" type="text" /></span>
 					<span><form:errors path="username" cssStyle="color:red;" /><span
@@ -84,13 +49,12 @@ div {
 					<span><span class="colorRed" id="validate-status">${passmismatch}</span></span>
 					<!-- 					<span><span ></span></span> -->
 				</div>
-
+				<br />
 				<div>
-					<span><input class="form-control btn btn-success" type="submit"
-						value="Register" /></span>
+					<span><input class="form-control btn btn-success"
+						type="submit" value="Register" /></span>
 				</div>
 			</div>
 		</form:form>
 	</div>
-</body>
-</html>
+</div>
