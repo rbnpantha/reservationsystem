@@ -1,5 +1,7 @@
 About the Project!! 
 
+Academic Project : Web Application Architecture
+
 Hotel Booking System, Maharishi University of Management:: Created a hotel reservation system in spring boot using spring data JPA along with integrated RESTful web service and well managed scopes . The project allows a system admin to add update or delete rooms in the resort and users can book the room if available. A confirmation email is send to the customer whenever s/he books a room. Once booked room will be available automatically after the reservation period is over. The user can view his profile to see the information of the room booked till date.  
 
 Technologies Used : Java, JSP, Java, HTML5, CSS3, JavaScript, Bootstrap, Eclipse, Git, Spring, Hibernate, CRUD data repository, JSON, RESTful, Spring Boot
